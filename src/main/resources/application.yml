@@ -1,2 +1,15 @@
 server:
   port: 8085
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/trackdynamics"
+    jdbc-url: ${spring.datasource.url}
+    driverClassName: 'org.postgresql.Driver'
+    platform: 'postgres'
+    username: 'alquimistas'
+    password: '123456'
+
+  jpa:
+    hibernate:
+      ddl-auto: create
