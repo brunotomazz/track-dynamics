@@ -3,14 +3,11 @@ package com.trackdynamics.entity;
 import com.trackdynamics.repository.TaskRepository;
 import com.trackdynamics.repository.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -94,5 +91,29 @@ public class TaskRepositoryTest {
         Optional<Task> testUpdateTask = repository.findById(read.getId());
         assertThat(testUpdateTask.isPresent()).isTrue();
         assertThat(testUpdateTask.get().getTitle()).isEqualTo("Play");
+    }
+    @Test
+    void testFindTaskListByUserName() {
+        // define numero de tasks da lista
+        final int expectedNumberOfTasks = 2; //Long é um tipo de varivável numérica.
+        Task read = Task.builder()
+                .title("Ler")
+                .user(leonardo).build();
+
+        read = repository.save(read);
+
+        Task run = Task.builder()
+                .title("Correr")
+                .user(leonardo).build();
+
+        run = repository.save(run);
+        // busca pelo nome Leonardo
+        List<Task> taskList = repository.findByUserName("Leonardo");
+        //verifica se a lista não esta vazia
+        assertThat(taskList.isEmpty()).isFalse();
+        // verifica se o tamanho da lista é o esperado
+        assertThat(taskList).hasSize(expectedNumberOfTasks);
+        // extrai as tarefas pelos usuários
+        assertThat(taskList).extracting("user.name").containsOnly("Leonardo");
     }
 }
