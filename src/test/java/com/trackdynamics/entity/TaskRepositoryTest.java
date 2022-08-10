@@ -3,6 +3,7 @@ package com.trackdynamics.entity;
 import com.trackdynamics.repository.TaskRepository;
 import com.trackdynamics.repository.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +116,53 @@ public class TaskRepositoryTest {
         assertThat(taskList).hasSize(expectedNumberOfTasks);
         // extrai as tarefas pelos usuários
         assertThat(taskList).extracting("user.name").containsOnly("Leonardo");
+    }
+    @Test
+    void testFindTaskListByUserNameNativeQuery() {
+        final int expectedNumberOfTasks = 2;
+        Task study = Task.builder()
+                .title("Estudar")
+                .user(leonardo).build();
+
+        study = repository.save(study);
+
+        Task run = Task.builder()
+                .title("Correr")
+                .user(leonardo).build();
+
+        run = repository.save(run);
+
+        List<Task> taskList = repository.findTaskByName(leonardo.getName());
+        assertThat(taskList.isEmpty()).isFalse();
+        assertThat(taskList).hasSize(expectedNumberOfTasks);
+        assertThat(taskList).extracting("user.name").containsOnly(leonardo.getName());
+        assertThat(taskList).extracting("title").containsOnly(study.getTitle(), run.getTitle());
+    }
+
+    @Test
+    void testFindTaskByTitle() {
+        Task study = Task.builder()
+                .title("Estudar")
+                .user(leonardo).build();
+
+        study = repository.save(study);
+
+        Optional<Task> findTaskByTitle = repository.findTaskByTitle("Estudar");
+        assertThat(findTaskByTitle.isPresent()).isTrue();
+        assertThat(findTaskByTitle.get().getTitle()).isEqualTo("Estudar");
+    }
+
+    @Test
+    void testTaskByField() {
+        Task study = Task.builder()
+                .title("Estudar")
+                .description("Estudar programação hoje")
+                .priority("Alta")
+                .user(leonardo).build();
+
+        study = repository.save(study);
+
+        List<Task> findTask = repository.findByTitleAndDescriptionAndPriority(study.getTitle(), study.getDescription(), study.getPriority());
+        assertThat(findTask.isEmpty()).isFalse();
     }
 }
