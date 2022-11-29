@@ -27,7 +27,7 @@ public class Task {
     private LocalDateTime dateCreation;
     @ManyToOne
     @JoinColumn(name = "id_user",referencedColumnName = "id",nullable = false) //junção com outra tabela(chave estrangeira)
-    public User user;
+    private User user;
     @Column
     private String priority;
     @Column
