@@ -5,6 +5,8 @@ import com.trackdynamics.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{ //controller chama o servi√ßo
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     }
 
     @Override
-    public User listAll(User user) {
-        return null;
+    public List<User> listAllUser() {
+        return userRepository.findAll();
     }
 }

@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository <User,Integer> {
     List<User> findByName(@Param("name") String name);
     @Query(value="select * from users where last_name = :lastName", nativeQuery = true) // nativeQuery quer dizer que será feita com SQL puro.
     List<User> findByLastName(@Param("lastName") String lastName);
+
+    //Criar método listAll
 }
