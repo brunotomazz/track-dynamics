@@ -1,6 +1,7 @@
 package com.trackdynamics.entity;
 
 import com.trackdynamics.repository.UserRepository;
+import com.trackdynamics.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,5 +114,27 @@ public class UserRepositoryTest {
         List<User> findLastName = repository.findByLastName("da Costa");// lista de usuários filtrada por sobrenome
         assertThat(findLastName.isEmpty()).isFalse(); // checa se a condição "lista vazia" é falsa.
         assertThat(findLastName.get(0).getLastName()).isEqualTo("da Costa");// checa se o sobrenome é "da Costa"
+    }
+
+    @Test
+    void testListAllUser(){
+        User leonardo = User.builder()
+                .name("Leonardo")
+                .lastName("da Costa")
+                .password("123456").build();
+
+        User bruno = User.builder()
+                .name("Bruno")
+                .lastName("Tomaz")
+                .password("123456").build();
+
+        leonardo = repository.save(leonardo); // criando e salvando um usuário.
+        bruno = repository.save(bruno);
+
+        List<User> listUser = repository.findAll();
+
+        assertThat(listUser.isEmpty()).isFalse();
+        assertThat(listUser).extracting(User::getName).containsOnly("Leonardo","Bruno");
+        System.out.println(listUser);
     }
 }

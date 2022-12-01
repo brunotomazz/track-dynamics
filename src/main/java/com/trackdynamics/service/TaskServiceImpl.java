@@ -4,6 +4,8 @@ import com.trackdynamics.entity.Task;
 import com.trackdynamics.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService{
@@ -20,7 +22,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task listAllTasks(Task task) {
-        return null;
+    public List<Task> listAllTasks(){
+        return taskRepository.findAll();
     }
 }
