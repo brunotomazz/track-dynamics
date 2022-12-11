@@ -4,10 +4,7 @@ import com.trackdynamics.controller.dto.TaskDTO;
 import com.trackdynamics.entity.Task;
 import com.trackdynamics.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tasks")
@@ -24,5 +21,10 @@ public class TaskController {
         task = taskService.saveTask(task);
         TaskDTO taskDTOConverted = taskMapper.convertTasktoTaskDTO(task);
         return taskDTOConverted;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTaskById(@PathVariable("id") Integer id){
+        taskService.deleteTaskById(id);
     }
 }

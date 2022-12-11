@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TaskMapper {
     public Task convertTaskDTOtoTask(TaskDTO taskDTO){
-        Task task = Task.builder()
+        return Task.builder()
                 .id(taskDTO.getId())
                 .title(taskDTO.getTitle())
                 .description(taskDTO.getDescription())
@@ -19,11 +19,10 @@ public class TaskMapper {
                 .priority(taskDTO.getPriority())
                 .overdue(taskDTO.getOverdue())
                 .build();
-        return task;
     }
 
     public TaskDTO convertTasktoTaskDTO(Task task){
-        TaskDTO taskDTO = TaskDTO.builder()
+        return TaskDTO.builder()
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
@@ -33,6 +32,5 @@ public class TaskMapper {
                 .priority(task.getPriority())
                 .overdue(task.getOverdue())
                 .build();
-        return taskDTO;
     }
 }
