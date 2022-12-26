@@ -9,4 +9,5 @@ public interface TaskService {
     void deleteTask(Task task);
     void deleteTaskById(Integer id);
     List<Task> listAllTasks();
+    Task findById(Integer id);
 }
