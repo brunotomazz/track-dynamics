@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     }
 
     @Override
+    public void deleteUserById(Integer id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public List<User> listAllUser() {
         return userRepository.findAll();
     }
