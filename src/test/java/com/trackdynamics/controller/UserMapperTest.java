@@ -18,6 +18,12 @@ public class UserMapperTest {
         User bruno = createUser.createUser();
         UserDTO brunoConverted = userMapper.convertUsertoUserDTO(bruno);
         System.out.println(brunoConverted);
+
+        assertThat(bruno.getId()).isEqualTo(brunoConverted.getId());
+        assertThat(bruno.getName()).isEqualTo(brunoConverted.getName());
+        assertThat(bruno.getLastName()).isEqualTo(brunoConverted.getLastName());
+        assertThat(bruno.getEmail()).isEqualTo(brunoConverted.getEmail());
+        assertThat(bruno.getPassword()).isEqualTo(brunoConverted.getPassword());
     }
 
     @Test
@@ -26,6 +32,10 @@ public class UserMapperTest {
         User brunoConverted = userMapper.convertUserDTOtoUser(bruno);
         System.out.println(brunoConverted);
 
-        Assertions.assertEquals(createUser.createUser(), brunoConverted);
+        assertThat(bruno.getId()).isEqualTo(brunoConverted.getId());
+        assertThat(bruno.getName()).isEqualTo(brunoConverted.getName());
+        assertThat(bruno.getLastName()).isEqualTo(brunoConverted.getLastName());
+        assertThat(bruno.getEmail()).isEqualTo(brunoConverted.getEmail());
+        assertThat(bruno.getPassword()).isEqualTo(brunoConverted.getPassword());
     }
 }

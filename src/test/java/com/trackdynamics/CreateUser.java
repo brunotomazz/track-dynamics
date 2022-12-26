@@ -23,6 +23,5 @@ public class CreateUser {
                 .password("123456")
                 .build();
         return userDTO;
-
     }
 }
