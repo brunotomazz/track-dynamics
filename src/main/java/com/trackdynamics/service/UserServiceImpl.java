@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     public List<User> listAllUser() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
 }

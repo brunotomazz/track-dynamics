@@ -1,5 +1,6 @@
 package com.trackdynamics.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
