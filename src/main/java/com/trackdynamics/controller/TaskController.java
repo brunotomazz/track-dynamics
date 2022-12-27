@@ -6,6 +6,8 @@ import com.trackdynamics.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -31,5 +33,13 @@ public class TaskController {
     public TaskDTO findById(@PathVariable("id") Integer id){
         Task task = taskService.findById(id);
         return taskMapper.convertTasktoTaskDTO(task);
+    }
+
+    @GetMapping("/list-all")
+    public List<TaskDTO> listAllTasks() {
+        List<Task> tasks = taskService.listAllTasks();
+        return tasks.stream()
+                .map(taskMapper::convertTasktoTaskDTO)
+                .toList();
     }
 }

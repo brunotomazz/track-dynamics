@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -37,8 +39,20 @@ public class UserController {
         User user = userService.findById(id);
         return userMapper.convertUsertoUserDTO(user);
     }
-}
 
+    @GetMapping("/list-all")
+    public List<UserDTO> listAllUser() {
+        List<User> users = userService.listAllUser();
+//        List<UserDTO> userDTO = new ArrayList<>();//
+//        for(User u : user) {
+//            userDTO.add(userMapper.convertUsertoUserDTO(u));
+//        }
+//        return userDTO;
+        return users.stream()
+                .map(userMapper::convertUsertoUserDTO)
+                .toList();
+    }
+}
 
 //GET - recuperar um informação.
 //POST - criar um recurso, enviar um comando q contém um corpo.
