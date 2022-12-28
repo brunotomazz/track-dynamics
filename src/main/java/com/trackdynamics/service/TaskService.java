@@ -10,4 +10,5 @@ public interface TaskService {
     void deleteTaskById(Integer id);
     List<Task> listAllTasks();
     Task findById(Integer id);
+    void deleteByUserId(Integer id);
 }

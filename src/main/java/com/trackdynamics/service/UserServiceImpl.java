@@ -4,6 +4,7 @@ import com.trackdynamics.entity.User;
 import com.trackdynamics.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{ //controller chama o serviço
     private final UserRepository userRepository;
+    private final TaskService taskService;
 
     @Override
     public User saveUser(User user) {   //método para salvar no banco
@@ -23,7 +25,9 @@ public class UserServiceImpl implements UserService{ //controller chama o servi�
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Integer id) {
+        taskService.deleteByUserId(id);
         userRepository.deleteById(id);
     }
 

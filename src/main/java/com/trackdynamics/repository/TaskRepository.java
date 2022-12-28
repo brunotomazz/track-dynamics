@@ -19,4 +19,5 @@ public interface TaskRepository extends JpaRepository <Task,Integer> {//Task é 
 
     List<Task> findByTitleAndDescriptionAndPriority(String title, String description, String priority);
 
+    void deleteByUserId(Integer id);
 }
