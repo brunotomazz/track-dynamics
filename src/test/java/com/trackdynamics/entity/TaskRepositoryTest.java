@@ -165,4 +165,19 @@ public class TaskRepositoryTest {
         List<Task> findTask = repository.findByTitleAndDescriptionAndPriority(study.getTitle(), study.getDescription(), study.getPriority());
         assertThat(findTask.isEmpty()).isFalse();
     }
+
+    @Test
+    void testDeleteByUserId() {
+                Task run = Task.builder()
+                .title("Run")
+                .description("Run today")
+                .priority("Alta")
+                .user(leonardo).build();
+
+        run = repository.save(run);
+        repository.deleteByUserId(run.getUser().getId());
+
+        Optional<Task> deleteByUserId = repository.findById(run.getId());
+        assertThat(deleteByUserId.isPresent()).isFalse();
+    }
 }
