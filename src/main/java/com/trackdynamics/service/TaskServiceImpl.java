@@ -1,12 +1,13 @@
 package com.trackdynamics.service;
 
 import com.trackdynamics.entity.Task;
-import com.trackdynamics.entity.User;
+import com.trackdynamics.exception.DeleteRegistryException;
 import com.trackdynamics.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +25,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTaskById(Integer id) {
-        taskRepository.deleteById(id);
+    public void deleteTaskById(Integer id) throws DeleteRegistryException {
+        try {
+            taskRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DeleteRegistryException("An error ocurred when trying to delete task with id " + id);
+        }
     }
 
     @Override
@@ -34,8 +39,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findById(Integer id) {
-        return taskRepository.findById(id).orElse(null);
+    public Optional<Task> findById(Integer id) {
+        return taskRepository.findById(id);
     }
 
     @Override

@@ -1,12 +1,14 @@
 package com.trackdynamics.service;
 
 import com.trackdynamics.entity.User;
+import com.trackdynamics.exception.DeleteRegistryException;
 import com.trackdynamics.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +27,14 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     }
 
     @Override
-    @Transactional
-    public void deleteUserById(Integer id) {
-        taskService.deleteByUserId(id);
-        userRepository.deleteById(id);
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteUserById(Integer id) throws DeleteRegistryException {
+        try{
+            taskService.deleteByUserId(id);
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DeleteRegistryException("An error ocurred when trying to delete user with id " + id);
+        }
     }
 
     @Override
@@ -37,7 +43,7 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     }
 
     @Override
-    public User findById(Integer id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<User> findById(Integer id) {
+        return userRepository.findById(id);
     }
 }
