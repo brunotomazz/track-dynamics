@@ -26,9 +26,9 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody UserDTO userDTO) {  //DTO trafega a info do objeto entre camadas do sistema.
         User user = userMapper.convertUserDTOtoUser(userDTO);
-            user = userService.saveUser(user);
-            log.info("Mostrar user convertido {}", user);
-            return ResponseEntity.of(Optional.of(userMapper.convertUsertoUserDTO(user)));
+        user = userService.saveUser(user);
+        log.info("Mostrar user convertido {}", user);
+        return ResponseEntity.of(Optional.of(userMapper.convertUsertoUserDTO(user)));
     }
 
     @DeleteMapping("/{id}")
@@ -54,15 +54,28 @@ public class UserController {
     @GetMapping("/list-all")
     public ResponseEntity<?> listAllUser() {
         List<User> users = userService.listAllUser();
-//        List<UserDTO> userDTO = new ArrayList<>();//
+        return ResponseEntity.of(Optional.of(users.stream()
+                .map(userMapper::convertUsertoUserDTO)
+                .toList()));
+
+        //        List<UserDTO> userDTO = new ArrayList<>();//
 //        for(User u : user) {
 //            userDTO.add(userMapper.convertUsertoUserDTO(u));
 //        }
 //        return userDTO;
-        return ResponseEntity.of(Optional.of(users.stream()
-                .map(userMapper::convertUsertoUserDTO)
-                .toList()));
     }
+
+    @PutMapping("/update-user")
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
+        User user = userMapper.convertUserDTOtoUser(userDTO);
+        user = userService.updateUser(user);
+        log.info("Mostrar user convertido {}", user);
+        return ResponseEntity.of(Optional.of(userMapper.convertUsertoUserDTO(user)));
+    }
+//    TO-DO
+//    Quando não passado o id, está criando um novo usuário
+//    Quando passado um id não existente está criando um novo usuário
+//    Quando passado o id e todos os outros campos do body vazios, está salvando vazio
 }
 
 //GET - recuperar um informação.
