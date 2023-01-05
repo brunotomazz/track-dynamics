@@ -8,9 +8,16 @@ import java.util.Optional;
 
 public interface TaskService {
     Task saveTask(Task task);
+
     void deleteTask(Task task);
+
     void deleteTaskById(Integer id) throws DeleteRegistryException;
+
     List<Task> listAllTasks();
+
     Optional<Task> findById(Integer id);
+
     void deleteByUserId(Integer id);
+
+    Task updateTask(Task task);
 }

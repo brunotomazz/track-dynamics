@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{ //controller chama o servi√ßo
+public class UserServiceImpl implements UserService { //controller chama o servi√ßo
     private final UserRepository userRepository;
     private final TaskService taskService;
 
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteUserById(Integer id) throws DeleteRegistryException {
-        try{
+        try {
             taskService.deleteByUserId(id);
             userRepository.deleteById(id);
         } catch (Exception e) {
@@ -45,5 +45,10 @@ public class UserServiceImpl implements UserService{ //controller chama o servi√
     @Override
     public Optional<User> findById(Integer id) {
         return userRepository.findById(id);
+    }
+
+    @Override
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 }
