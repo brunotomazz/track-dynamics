@@ -16,6 +16,4 @@ public interface UserService {
     List<User> listAllUser();
 
     Optional<User> findById(Integer id);
-
-    User updateUser(User user);
 }

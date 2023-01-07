@@ -46,9 +46,4 @@ public class UserServiceImpl implements UserService { //controller chama o servi
     public Optional<User> findById(Integer id) {
         return userRepository.findById(id);
     }
-
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
 }

@@ -65,17 +65,21 @@ public class UserController {
 //        return userDTO;
     }
 
-    @PutMapping("/update-user")
+    @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
         User user = userMapper.convertUserDTOtoUser(userDTO);
-        user = userService.updateUser(user);
+        user = userService.saveUser(user);
         log.info("Mostrar user convertido {}", user);
         return ResponseEntity.of(Optional.of(userMapper.convertUsertoUserDTO(user)));
     }
-//    TO-DO
-//    Quando não passado o id, está criando um novo usuário
-//    Quando passado um id não existente está criando um novo usuário
-//    Quando passado o id e todos os outros campos do body vazios, está salvando vazio
+/*
+    TODO
+     -Se id ou objeto for nulo, retorna 400.
+     -Se passar um id inexistente, retornar 404.
+     -Atualizar classe User e Task, com bean-validation, nos campos obrigatórios.
+*/
+
+//    Quando passado o id e todos os outros campos do body string vazios, está salvando vazio
 }
 
 //GET - recuperar um informação.

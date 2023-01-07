@@ -68,19 +68,26 @@ public class TaskController {
                 .toList()));
     }
 
-    @PutMapping("/update-task")
+    @PutMapping
     public ResponseEntity<?> updateTask(@RequestBody TaskDTO taskDTO) {
         try {
             Task task = taskMapper.convertTaskDTOtoTask(taskDTO);
             User user = userService.findById(task.getUser().getId()).orElseThrow(() -> new RegistryNotFoundException("User not found with id " + taskDTO.getIdUser()));
             task.setUser(user);
-            task = taskService.updateTask(task);
+            task = taskService.saveTask(task);
             return ResponseEntity.of(Optional.of(taskMapper.convertTasktoTaskDTO(task)));
         } catch (RegistryNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    //TO-DO
+    /*
+    TODO
+        -Atualizar classe User e Task, com bean-validation, nos campos obrigatórios.
+        -Se id ou objeto for nulo, retorna 400.
+        -Se passar um id inexistente, retornar 404.
+        -Verificar o idUser da task, se não for o mesmo do banco(salvo), retorna 400.
+    */
+
     // Task não encontrada, esta cadastrando uma nova.
     // Quando atualizamos um task existente passando um usuário que não é pai dela. A task passa a ser atribuida ao usuário passado e excluida do usuário anterior
 }

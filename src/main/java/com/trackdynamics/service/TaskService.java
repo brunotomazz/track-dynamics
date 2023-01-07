@@ -18,6 +18,4 @@ public interface TaskService {
     Optional<Task> findById(Integer id);
 
     void deleteByUserId(Integer id);
-
-    Task updateTask(Task task);
 }
